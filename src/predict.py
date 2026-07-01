@@ -3,7 +3,6 @@
 import re
 import torch
 
-from app.streamlit_app import char2idx, idx2char
 from src.config import MODEL_PATH, META_PATH, EMBED_SIZE, HIDDEN_SIZE,MAX_OUTPUT_LEN,SOS_TOKEN,UNK_TOKEN,EOS_TOKEN,DATA_PATH
 from src.data_utils import normalize_text, encode_text
 from src.model import Seq2SeqTranslator
@@ -50,7 +49,7 @@ def load_exact_dictionary():
     # pandas 의족을 줄이기 위해 csv 모둘을 사용합니다.
     import csv
     # 정확 매칭 번역을 저장할 딕셔너리 생성힘
-    mapping = 0
+    mapping = {}
     # CSV 파일을 utf-8 인코딩으로 엽니다.
     with open(DATA_PATH,"r",encoding="utf-8") as f:
         # DictReader는 첫 줄의 en, ko 컬럼명을 기준으로 행을 딕셔너리를 읽습니다.
@@ -108,7 +107,7 @@ def translate(text:str, model=None, char2idx=None,idx2char=None)->str:
             # 현재까지의 hidden과 직전 글자를 바탕으로 다음 글자 점수를 계산함
             logits,hidden = model.decoder(decoder_input,hidden)
             # 가장 점수가 높은 문자 인덱스를 선택함
-            next_id = int(torch.argmax(logits[:,-1:],dim=1).item())
+            next_id = int(torch.argmax(logits[:,-1,:],dim=1).item())
             # 선택된 인덱스를 문자로 변환함
             next_char = idx2char.get(next_id,UNK_TOKEN)
             # EOS가 나오면 문장 생성이 끝난 것으로 보고 반복을 중단함

@@ -3,7 +3,7 @@
 from pathlib import Path
 
 # 현재 config.py 파일의 상위 폴더(src)의 상위 폴더를 프로젝트 루트로 지정합니다.
-# 예: smart_translator_torch_streamlit_project/src/config.py -> smart_translator_torch_streamlit_project
+# 예: smart_translator_project/src/config.py -> smart_translator_project
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # 학습 데이터 CSV 파일 경로를 지정합니다.

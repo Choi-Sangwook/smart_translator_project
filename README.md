@@ -31,6 +31,7 @@ smart_translator_torch_streamlit_project/
 
 ## 설치
 ```bash
+python -m pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
 ```
 
@@ -69,4 +70,5 @@ what are you doing
 
 ## 참고
 이 예제는  문자 단위 Seq2Seq 모델입니다. 
-실제 상용 번역기 수준의 품질을 원한다면 더 많은 병렬 말뭉치, Transformer 기반 모델, SentencePiece 토크나이저, BLEU/chrF 평가 등을 추가해야 합니다.
+실제 상용 번역기 수준의 품질을 원한다면 더 많은 병렬 말뭉치, Transformer 기반 모델, SentencePiece 토크나이저, 
+BLEU/chrF 평가 등을 추가해야 합니다.

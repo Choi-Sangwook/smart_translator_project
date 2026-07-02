@@ -3,25 +3,43 @@
 from pathlib import Path
 
 # 현재 config.py 파일의 상위 폴더(src)의 상위 폴더를 프로젝트 루트로 지정합니다.
-# 예: smart_translator_project/src/config.py -> smart_translator_project
+# 예: smart_translator_project/src/config.py -> smart_translator_project 폴더 저장 처리
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # 학습 데이터 CSV 파일 경로를 지정합니다.
 DATA_PATH = BASE_DIR / "data" / "translation_pairs.csv"
 
 # 학습된 PyTorch 모델 파일이 저장될 경로를 지정합니다.
-MODEL_PATH = BASE_DIR / "models" / "smart_translator.pt"
+# MODEL_PATH = BASE_DIR / "models" / "smart_translator.pt"
+#transformer
+MODEL_PATH = BASE_DIR / "models" / "smart_transformer_translator.pt"
+
 
 # 문자 사전, 문장 최대 길이, 하이퍼파라미터 등 메타 정보를 함께 저장할 경로입니다.
-META_PATH = BASE_DIR / "models" / "translator_meta.pt"
+# META_PATH = BASE_DIR / "models" / "translator_meta.pt"
+#transformer
+META_PATH = BASE_DIR / "models" / "transformer_translator_meta.pt"
 
-# 인코더와 디코더의 임베딩 차원입니다.
-# 문자를 정수로 바꾼 뒤, 이 정수를 벡터 공간으로 변환할 때 사용하는 크기입니다.
-EMBED_SIZE = 64
+# ------------------------------------------------------
+# Transformer 하이퍼파라미터
+# (기존 GRU용 EMBED_SIZE / HIDDEN_SIZE 는 아래 값들로 대체되었습니다.)
+# ------------------------------------------------------
 
-# RNN의 은닉 상태 차원입니다.
-# 값이 클수록 표현력이 커질 수 있지만 학습 시간이 증가할 수 있습니다.
-HIDDEN_SIZE = 128
+# 토큰 임베딩 및 모델 전체에서 사용하는 벡터 차원입니다. (노트북 실습의 d에 해당)
+D_MODEL = 64
+
+# Multi-Head Attention에서 병렬로 사용할 attention head 개수입니다.
+HEADS = 4
+
+# 인코더와 디코더를 각각 몇 개의 블록으로 쌓을지 결정합니다.
+DEPTH = 2
+
+# Feed Forward Neural Network에서 d_model을 몇 배로 확장할지 결정합니다. (노트북의 n_mlp)
+FF_MULT = 4
+
+# 위치 임베딩이 감당할 수 있는 최대 문장 길이입니다.
+# 방향 토큰(<EN2KO> 등)이 문자로 펼쳐지고 EOS가 붙는 점을 고려해 여유 있게 설정합니다.
+MAX_LEN = 64
 
 # 학습 반복 횟수입니다.
 # 강의교안의 MY_EPOCH 개념에 해당하며, 데이터 전체를 몇 번 반복 학습할지 결정합니다.
